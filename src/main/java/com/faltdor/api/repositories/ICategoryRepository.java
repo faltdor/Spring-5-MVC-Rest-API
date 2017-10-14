@@ -6,4 +6,6 @@ import com.faltdor.api.domain.Category;
 
 public interface ICategoryRepository extends JpaRepository<Category, Long> {
 
+	Category findByName(String name);
+
 }
