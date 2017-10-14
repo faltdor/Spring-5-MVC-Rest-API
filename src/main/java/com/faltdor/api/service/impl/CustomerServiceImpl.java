@@ -76,7 +76,10 @@ public class CustomerServiceImpl implements ICustomerService {
 			if(customerDTO.getLastname() != null) {
 				customer.setLastname(customerDTO.getLastname());
 			}
-			return customerMapper.toCustomerDTO(customerRepository.save(customer));
+			CustomerDTO savedDTO = customerMapper.toCustomerDTO(customerRepository.save(customer));
+			savedDTO.setCustomerUrl("/api/v1/customers/"+savedDTO.getId());
+			
+			return savedDTO;
 			
 		}).orElseThrow(RuntimeException::new);//TODO: implement better exception
 		

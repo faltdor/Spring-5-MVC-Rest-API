@@ -7,6 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import com.faltdor.api.controllers.v1.CategoryControllerTest;
 import com.faltdor.api.controllers.v1.CustomerControllerTest;
 import com.faltdor.api.services.CategoryServiceImplTest;
+import com.faltdor.api.services.CustomerServiceImplIT;
 import com.faltdor.api.services.CustomerServiceImplTest;
 import com.faltdor.api.v1.model.mapper.CustomerMapperImplTest;
 import com.faltdor.api.v1.model.mapper.ICategoryMapperTest;
@@ -18,7 +19,8 @@ import com.faltdor.api.v1.model.mapper.ICategoryMapperTest;
 	CategoryServiceImplTest.class,
 	CustomerServiceImplTest.class,
 	CustomerMapperImplTest.class,
-	ICategoryMapperTest.class
+	ICategoryMapperTest.class,
+	CustomerServiceImplIT.class
 
 
 

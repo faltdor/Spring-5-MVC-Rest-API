@@ -1,9 +1,9 @@
 package com.faltdor.api.controllers.v1;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -26,6 +26,7 @@ import com.faltdor.api.v1.model.CustomerDTO;
 
 public class CustomerControllerTest extends AbstractRestControllerTest{
 
+	private static final String ANY_NAME = "Any Name";
 	private static final long _1L = 1L;
 	private static final String LAST_NAME = "Newman";
 	private static final String FIRST_NAME = "Joe";
@@ -132,6 +133,31 @@ public class CustomerControllerTest extends AbstractRestControllerTest{
 
 	}
 	
+	
+	@Test
+	public void testPatchCustomer() throws Exception {
+		// Given
+		CustomerDTO customerDto = new CustomerDTO();
+		customerDto.setFirstname(ANY_NAME);
+		
+		
+		CustomerDTO returncustomerDto = new CustomerDTO();
+		returncustomerDto.setFirstname(customerDto.getFirstname());
+		returncustomerDto.setLastname(LAST_NAME);
+		returncustomerDto.setCustomerUrl("/api/v1/customers/1");
+		
+		// When
+		when(customerServiceImpl.patchCustomer(anyLong(),any(CustomerDTO.class))).thenReturn(returncustomerDto);
+		
+		mockMvc.perform(patch("/api/v1/customers/1")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(asJsonString(customerDto)))
+						.andExpect(status().isCreated())
+						.andExpect(jsonPath("$.firstname",equalTo(ANY_NAME)))
+						.andExpect(jsonPath("$.lastname",equalTo(LAST_NAME)))
+						.andExpect(jsonPath("$.customerUrl",equalTo("/api/v1/customers/1")));
+
+	}
 	
 	
 	
