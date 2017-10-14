@@ -17,9 +17,11 @@ import com.faltdor.api.v1.model.CustomerDTO;
 import com.faltdor.api.v1.model.CustomerListDTO;
 
 @Controller
-@RequestMapping("/api/v1/customers")
+@RequestMapping(CustomerController.BASE_URL)
 public class CustomerController {
 
+	public static final String BASE_URL = "/api/v1/customers";
+	
 	private final CustomerServiceImpl customerServiceImpl;
 	
 	public CustomerController(CustomerServiceImpl customerServiceImpl) {

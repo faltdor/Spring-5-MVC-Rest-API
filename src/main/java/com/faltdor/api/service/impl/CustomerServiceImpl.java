@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.faltdor.api.controllers.v1.CustomerController;
 import com.faltdor.api.domain.Customer;
 import com.faltdor.api.repositories.ICustomerRepository;
 import com.faltdor.api.service.ICustomerService;
@@ -29,7 +30,7 @@ public class CustomerServiceImpl implements ICustomerService {
 								 .stream()
 								 .map(customer -> {
 									 CustomerDTO customerDTO = customerMapper.toCustomerDTO(customer);
-									 customerDTO.setCustomerUrl("/api/v1/customer/"+customerDTO.getId());
+									 customerDTO.setCustomerUrl(getCustomerUrl(customerDTO.getId()));
 									 return customerDTO;
 								 })
 								 .collect(Collectors.toList());
@@ -56,7 +57,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	private CustomerDTO saveAndReturnCustomerDTO(CustomerDTO customerDto) {
 		Customer savedcustomer = customerRepository.save(customerMapper.toCustomer(customerDto));
 		CustomerDTO returnDTO = customerMapper.toCustomerDTO(savedcustomer);
-		returnDTO.setCustomerUrl("/api/v1/customers/"+savedcustomer.getId());
+		returnDTO.setCustomerUrl(getCustomerUrl(savedcustomer.getId()));
 		return returnDTO;
 	}
 	
@@ -77,7 +78,7 @@ public class CustomerServiceImpl implements ICustomerService {
 				customer.setLastname(customerDTO.getLastname());
 			}
 			CustomerDTO savedDTO = customerMapper.toCustomerDTO(customerRepository.save(customer));
-			savedDTO.setCustomerUrl("/api/v1/customers/"+savedDTO.getId());
+			savedDTO.setCustomerUrl(getCustomerUrl(savedDTO.getId()));
 			
 			return savedDTO;
 			
@@ -87,6 +88,10 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public void deleteCustomer(Long id) {
 		customerRepository.deleteById(id);
+	}
+	
+	private String getCustomerUrl(Long id) {
+		return CustomerController.BASE_URL +"/"+id;
 	}
 
 }
