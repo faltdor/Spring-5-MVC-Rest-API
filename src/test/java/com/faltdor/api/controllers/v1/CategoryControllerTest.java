@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.faltdor.api.service.ResourceNotFoundException;
 import com.faltdor.api.service.impl.CategoryServiceImpl;
 import com.faltdor.api.v1.model.CategoryDTO;
 
@@ -41,7 +42,9 @@ public class CategoryControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(controller)
+				.setControllerAdvice(new RestResponseEntityExceptionHandler())
+				.build();
 	}
 
 	@Test
@@ -79,10 +82,17 @@ public class CategoryControllerTest {
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.name",equalTo(FRUITS)));
+	}
+	
+	@Test
+	public void testGetByNameCategoriesNotFound() throws Exception {
 		
+		when(categoryServiceImpl.getCategoryByName(anyString())).thenThrow(ResourceNotFoundException.class);
 		
-		
-		
+		//when
+		mockMvc.perform(get("/api/v1/categories/fruits")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
 	}
 
 }

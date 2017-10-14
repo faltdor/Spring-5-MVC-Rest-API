@@ -38,6 +38,11 @@ public class CustomerController {
 		return new ResponseEntity<CustomerDTO>(customerServiceImpl.getCustomerByFirstName(firstName),HttpStatus.OK );
 	}
 	
+	@GetMapping("/id/{id}")
+	public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable Long id) {
+		return new ResponseEntity<CustomerDTO>(customerServiceImpl.getCustomerById(id),HttpStatus.OK );
+	}
+	
 	@PostMapping
 	public ResponseEntity<CustomerDTO> createNewCustomer(@RequestBody CustomerDTO customerDto){
 		

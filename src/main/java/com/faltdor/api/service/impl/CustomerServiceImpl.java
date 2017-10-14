@@ -9,6 +9,7 @@ import com.faltdor.api.controllers.v1.CustomerController;
 import com.faltdor.api.domain.Customer;
 import com.faltdor.api.repositories.ICustomerRepository;
 import com.faltdor.api.service.ICustomerService;
+import com.faltdor.api.service.ResourceNotFoundException;
 import com.faltdor.api.v1.model.CustomerDTO;
 import com.faltdor.api.v1.model.mapper.ICustomerMapper;
 
@@ -38,14 +39,19 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public CustomerDTO getCustomerByFirstName(String firstName) {
-		return customerMapper.toCustomerDTO(customerRepository.findByFirstname(firstName));
+		Customer returnCustomer = customerRepository.findByFirstname(firstName);
+		if(returnCustomer == null) {
+			throw new ResourceNotFoundException("Customer "+firstName+" Not Found");
+		}
+		
+		return customerMapper.toCustomerDTO(returnCustomer);
 	}
 	
 	@Override
 	public CustomerDTO getCustomerById(Long id) {
 		return customerRepository.findById(id)
 							.map(customerMapper::toCustomerDTO)
-							.orElseThrow(RuntimeException::new);//TODO: Implement Exception
+							.orElseThrow(ResourceNotFoundException::new);
 	}
 	
 	@Override
@@ -82,7 +88,7 @@ public class CustomerServiceImpl implements ICustomerService {
 			
 			return savedDTO;
 			
-		}).orElseThrow(RuntimeException::new);//TODO: implement better exception
+		}).orElseThrow(ResourceNotFoundException::new);
 		
 	}
 	@Override
