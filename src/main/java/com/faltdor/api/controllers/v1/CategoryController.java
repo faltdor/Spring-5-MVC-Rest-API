@@ -6,15 +6,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.faltdor.api.service.impl.CategoryServiceImpl;
 import com.faltdor.api.v1.model.CategoryDTO;
 import com.faltdor.api.v1.model.CategoryListDTO;
 
-@Controller
-@RequestMapping("/api/v1/categories")
+@RestController
+@RequestMapping(CategoryController.BASE_URL)
 public class CategoryController {
 
+	public static final String BASE_URL = "/api/v1/categories";
+	
 	private final CategoryServiceImpl categoryServiceImpl;
 
 	public CategoryController(CategoryServiceImpl categoryServiceImpl) {
@@ -22,15 +26,15 @@ public class CategoryController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<CategoryListDTO> getallCategories(){
-		
-		return new ResponseEntity<CategoryListDTO>(new CategoryListDTO(categoryServiceImpl.getAllCategories()), HttpStatus.OK);
+	@ResponseStatus(HttpStatus.OK)
+	public CategoryListDTO getallCategories(){
+		return new CategoryListDTO(categoryServiceImpl.getAllCategories());
 	}
 	
 	@GetMapping("/{name}")
-	public ResponseEntity<CategoryDTO> getCategoryByName(@PathVariable String name){
-		
-		return new ResponseEntity<CategoryDTO>(categoryServiceImpl.getCategoryByName(name),HttpStatus.OK);
+	@ResponseStatus(HttpStatus.OK)
+	public CategoryDTO getCategoryByName(@PathVariable String name){
+		return categoryServiceImpl.getCategoryByName(name);
 	}
 	
 	
