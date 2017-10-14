@@ -28,7 +28,6 @@ public class CustomerServiceImplTest {
 	@Mock
 	ICustomerRepository customerRepository;
 	
-
 	CustomerServiceImpl customerServiceImpl;
 
 	@Before
