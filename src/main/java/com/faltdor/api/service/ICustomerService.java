@@ -14,4 +14,6 @@ public interface ICustomerService {
 	CustomerDTO getCustomerById(Long id);
 
 	CustomerDTO createNewCustomer(CustomerDTO customerDto);
+
+	CustomerDTO updateCustomerByDto(long customerId, CustomerDTO saveCustomer);
 }

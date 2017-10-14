@@ -117,5 +117,36 @@ public class CustomerServiceImplTest {
 		assertThat(customeDto.getId()).isEqualTo(_1L);
 
 	}
+	
+	@Test
+	public void testSaveCustomerByDto() {
+		// Given
+		String firstName = "Adan";
+		String lastname = "Smitt";
+				
+		CustomerDTO customerDto = new CustomerDTO();
+		customerDto.setFirstname(firstName);
+		customerDto.setLastname(lastname);
+		
+		Customer savedCustomer = new Customer();
+		savedCustomer.setFirstname(customerDto.getFirstname());
+		savedCustomer.setLastname(customerDto.getLastname());
+		savedCustomer.setId(_1L);
+
+		when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+		
+		// When
+		CustomerDTO savedDto = customerServiceImpl.updateCustomerByDto(_1L,customerDto);
+
+		assertThat(savedDto).isNotNull();
+		assertThat(savedDto.getFirstname()).isNotEmpty();
+		assertThat(savedDto.getFirstname()).isNotBlank();
+		assertThat(savedDto.getFirstname()).isEqualTo(firstName);
+		assertThat(savedDto.getLastname()).isEqualTo(lastname);
+		assertThat(savedDto.getLastname()).isNotEmpty();
+		assertThat(savedDto.getLastname()).isNotBlank();
+		assertThat(savedDto.getId()).isEqualTo(_1L);
+
+	}
 
 }
