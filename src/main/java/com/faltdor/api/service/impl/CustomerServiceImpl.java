@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.faltdor.api.domain.Customer;
 import com.faltdor.api.repositories.ICustomerRepository;
 import com.faltdor.api.service.ICustomerService;
 import com.faltdor.api.v1.model.CustomerDTO;
@@ -44,6 +45,15 @@ public class CustomerServiceImpl implements ICustomerService {
 		return customerRepository.findById(id)
 							.map(customerMapper::toCustomerDTO)
 							.orElseThrow(RuntimeException::new);//TODO: Implement Exception
+	}
+	
+	@Override
+	public CustomerDTO createNewCustomer(CustomerDTO customerDto) {
+
+		Customer savedcustomer = customerRepository.save(customerMapper.toCustomer(customerDto));
+		CustomerDTO returnDTO = customerMapper.toCustomerDTO(savedcustomer);
+		returnDTO.setCustomerUrl("/api/v1/customer/"+savedcustomer.getId());
+		return returnDTO;
 	}
 
 }
