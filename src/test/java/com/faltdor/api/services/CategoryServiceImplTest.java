@@ -60,11 +60,11 @@ public class CategoryServiceImplTest {
 		
 		when(categoryRepository.findAll()).thenReturn(listCategoriersMock);
 		
-		List<CategoryDTO> listCategories = categoryService.getAllCategories();
+		List<CategoryDTO> categoryList = categoryService.getAllCategories();
 		
-		assertThat(listCategories).isNotNull();
-		assertThat(listCategories).isNotEmpty();
-		assertThat(listCategories.size()).isEqualTo(5);
+		assertThat(categoryList).isNotNull();
+		assertThat(categoryList).isNotEmpty();
+		assertThat(categoryList.size()).isEqualTo(5);
 		
 	}
 

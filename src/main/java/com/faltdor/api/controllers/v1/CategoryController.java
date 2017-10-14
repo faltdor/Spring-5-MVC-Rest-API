@@ -12,7 +12,7 @@ import com.faltdor.api.v1.model.CategoryDTO;
 import com.faltdor.api.v1.model.CategoryListDTO;
 
 @Controller
-@RequestMapping("/api/v1/categories/")
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
 
 	private final CategoryServiceImpl categoryServiceImpl;
@@ -27,7 +27,7 @@ public class CategoryController {
 		return new ResponseEntity<CategoryListDTO>(new CategoryListDTO(categoryServiceImpl.getAllCategories()), HttpStatus.OK);
 	}
 	
-	@GetMapping("{name}")
+	@GetMapping("/{name}")
 	public ResponseEntity<CategoryDTO> getCategoryByName(@PathVariable String name){
 		
 		return new ResponseEntity<CategoryDTO>(categoryServiceImpl.getCategoryByName(name),HttpStatus.OK);
