@@ -3,6 +3,7 @@ package com.faltdor.api.controllers.v1;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,6 +52,12 @@ public class CustomerController {
 	public ResponseEntity<CustomerDTO> patchCustomer(@RequestBody CustomerDTO customerDto,@PathVariable String id){
 		
 		return new ResponseEntity<CustomerDTO>(customerServiceImpl.patchCustomer(Long.valueOf(id),customerDto),HttpStatus.CREATED);
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteCustomer(@PathVariable String id){
+		customerServiceImpl.deleteCustomer(Long.valueOf(id));
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	

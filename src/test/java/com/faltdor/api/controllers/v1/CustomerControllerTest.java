@@ -2,6 +2,7 @@ package com.faltdor.api.controllers.v1;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -156,6 +157,20 @@ public class CustomerControllerTest extends AbstractRestControllerTest{
 						.andExpect(jsonPath("$.firstname",equalTo(ANY_NAME)))
 						.andExpect(jsonPath("$.lastname",equalTo(LAST_NAME)))
 						.andExpect(jsonPath("$.customerUrl",equalTo("/api/v1/customers/1")));
+
+	}
+	
+	@Test
+	public void testDeleteCustomer() throws Exception {
+		// Given
+		Long id = _1L;
+		// When
+		
+		mockMvc.perform(delete("/api/v1/customers/1")
+						.contentType(MediaType.APPLICATION_JSON))
+						.andExpect(status().isOk());
+		
+		verify(customerServiceImpl,times(1)).deleteCustomer(anyLong());;
 
 	}
 	

@@ -18,4 +18,6 @@ public interface ICustomerService {
 	CustomerDTO updateCustomerByDto(long customerId, CustomerDTO saveCustomer);
 
 	CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO);
+
+	void deleteCustomer(Long id);
 }

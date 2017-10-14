@@ -1,7 +1,6 @@
 package com.faltdor.api.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
@@ -146,6 +145,15 @@ public class CustomerServiceImplTest {
 		assertThat(savedDto.getLastname()).isNotBlank();
 		assertThat(savedDto.getId()).isEqualTo(_1L);
 
+	}
+	
+	@Test
+	public void testDeleteCustomer() {
+		Long id = _1L;
+		
+		customerServiceImpl.deleteCustomer(id);
+		
+		verify(customerRepository,times(1)).deleteById(anyLong());
 	}
 
 }
