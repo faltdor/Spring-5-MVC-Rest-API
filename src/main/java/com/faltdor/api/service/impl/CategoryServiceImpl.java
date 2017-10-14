@@ -3,11 +3,14 @@ package com.faltdor.api.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
 import com.faltdor.api.repositories.ICategoryRepository;
 import com.faltdor.api.service.ICategoryService;
 import com.faltdor.api.v1.model.CategoryDTO;
 import com.faltdor.api.v1.model.mapper.ICategoryMapper;
 
+@Service
 public class CategoryServiceImpl implements ICategoryService {
 	
 	private final ICategoryMapper categoryMapper; 
